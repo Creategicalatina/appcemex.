@@ -1,0 +1,7 @@
+{
+  "name": "appcemex",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
