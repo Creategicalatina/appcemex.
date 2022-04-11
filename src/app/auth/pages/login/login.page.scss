@@ -1,0 +1,58 @@
+.content-grid-login{
+    display: flex !important;
+    justify-content: center !important;
+    overflow: auto;
+    margin-bottom: 2rem;
+    // align-items: center !important;
+ }
+.input-login{
+    width: 100%;
+    padding-bottom: 0.7rem;
+    margin-bottom: 0rem;
+}
+.content-title-login{
+    margin-bottom: 2rem;
+}
+.content-title-login h4{
+    color: #002a59;
+}
+span.cwc-status-message{
+    font-size: 0.9rem;
+    color: red;
+}
+.content-message-error-login{
+    margin-top: -1rem;
+    margin-bottom: 1.3rem;
+}
+@font-face {
+    font-family: 'Roboto-medium';
+    src: url('../../../../assets/fonts/Roboto-Medium.ttf');
+  }
+.link-forgot-password{
+    font-family: 'Roboto-medium' !important;
+    margin-top: 1rem;
+    font-weight: bold !important;
+}
+.content-title-welcome h1{
+    color: #002a59;
+    font-size: 2.5rem !important;
+}
+.content-title-welcome{
+     padding-top: 1rem;
+     padding-bottom: 3rem;
+}
+.toolbar-login{
+    --background: #F4F6F9;
+    padding: 5rem !important;
+}
+.content-line-login{
+    padding-top: 1.5rem;
+    padding-bottom: 0.5rem;
+}
+.text-not-account{
+    color: #002a59 !important;
+}
+.text-not-account span{
+    color: #3FA9F5 !important;
+    font-weight: 700;
+}

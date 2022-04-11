@@ -1,0 +1,236 @@
+<form (submit)="register()" [formGroup]="form">
+  <div style="display: flex;">
+    <label for="" style="font-size: 0.9rem; margin-bottom: 0.7rem;">Selecciona el transportador
+      <cwc-tooltip content='Busca y selecciona la empresa o microempresa (administrador logístico tercero o hombre camión)'>
+        <cwc-icon style="margin-left: 0.5rem;" id='icon' name='information-rounded-fill' color="bright-blue" size='24px'></cwc-icon>
+      </cwc-tooltip>
+    </label>
+  </div>
+    <cwc-picker  
+    [status]='statusInputConveyor'
+    [statusMessage]='statusInputMessageConveyor' (cwcChange)="cwcChange($event)" class="w-full select-filter" unwrap="true" label="" filter-no-resultsMessage="No se encontraron resultados" filter-placeholder="Filtrar transportadores" placeholder="Seleccione una opción" filter="true">
+      <option *ngFor="let conveyor of listConveyors" [value]="conveyor.idConveyor">{{ conveyor.company ? conveyor.company.nameCompany : conveyor.user.firstName +' '+conveyor.user.lastName }}</option>
+      <!-- <option *ngFor="let conveyor of listConveyors" [value]="conveyor.idConveyor">mao</option> -->
+    </cwc-picker>
+  <cwc-grid class="demo-grid" design-version="v2" columns="12" mobile-columns="12" style="margin-top: 2rem;">
+    <cwc-cell colspan="12" mobile-colspan="12">
+          <div class="section">
+            <cwc-input class="input" 
+                      label='Nombre (s)'
+                      [status]='statusInputName'
+                      [statusMessage]='statusInputMessageName'
+                      design-version="v2" 
+                      formControlName="firstName"
+                      ngDefaultControl
+                      required
+            ></cwc-input>
+          </div>
+          <div class="section">
+            <cwc-input class="input" 
+                      label='Apellido (s)'
+                      [status]='statusInputLastName'
+                      [statusMessage]='statusInputMessageLastName'
+                      formControlName="lastName"
+                      design-version="v2" 
+                      ngDefaultControl
+                      required
+            ></cwc-input>
+          </div>
+          <div class="section">
+            <cwc-input class="input" 
+            label='Correo electrónico'
+            [status]='statusInputEmail'
+            [statusMessage]='statusInputMessageEmail'
+            formControlName="email"
+            ngDefaultControl
+            design-version="v2" 
+            required
+            ></cwc-input>
+          </div>
+          <div class="section">
+            <cwc-input class="input" 
+            label='N° documento'
+            [status]='statusInputDocument'
+            [statusMessage]='statusInputMessageDocument'
+            formControlName="document"
+            design-version="v2" 
+            ngDefaultControl
+            required
+            ></cwc-input>
+          </div>
+          <div class="section">
+            <cwc-input class="input" 
+            label='Código SAP'
+            [status]='statusInputSap'
+            [statusMessage]='statusInputMessageSap'
+            formControlName="codeSap"
+            design-version="v2"
+            ngDefaultControl
+            required
+            ></cwc-input>
+          </div>
+          <div class="section">
+            <cwc-input class="input" 
+            label='Número de celular'
+            type="number"
+            [status]='statusInputPhone'
+            [statusMessage]='statusInputMessagePhone'
+            formControlName="phoneNumber"
+            design-version="v2"
+            ngDefaultControl
+            required
+            ></cwc-input>
+          </div>
+    </cwc-cell>
+  </cwc-grid>
+
+
+  <!--=====================================
+    COMPONENTE PARA SUBIR ARCHIVOS
+  ======================================-->
+  <label for="">Licencia de conducir (opcional)</label>
+ <div *ngIf="!form.get('documentDrivinglicenseFrontal').value && !form.get('documentDrivinglicenseBack').value">
+  <cwc-grid class="demo-grid content-archive" >
+    <cwc-cell (click)="openModalPhotoLicence()" class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Tomar fotografía</h5>
+      </div>
+    </cwc-cell>
+    <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Seleccionar archivo</h5>
+      </div>
+    </cwc-cell>
+  </cwc-grid>
+</div>
+<div *ngIf="addLicence">
+  <cwc-grid class="demo-grid content-archive" >
+    <cwc-cell (click)="openModalPhotoLicence()" class="" colspan="12" mobile-colspan="12">
+      <div class="item-archives">
+        <cwc-icon name="attachment" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Licencia de conducción agregada </h5>
+        <cwc-icon (click)="removeLicence()" name="close" size="20px" color="bright-blue" style="margin-left: 1rem; cursor: pointer;"></cwc-icon>
+      </div>
+    </cwc-cell>
+  </cwc-grid>
+</div>
+
+<label for="">Carné de seguridad industrial y vial (opcional)</label>
+  <cwc-grid class="demo-grid content-archive" >
+    <cwc-cell class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Tomar fotografía</h5>
+      </div>
+    </cwc-cell>
+    <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Seleccionar archivo</h5>
+      </div>
+    </cwc-cell>
+</cwc-grid>
+
+<label for="">Cédula de ciudadania (opcional)</label>
+<div *ngIf="!form.get('documentIdentityCardFrontal').value && !form.get('documentIdentityCardBack').value">
+  <cwc-grid class="demo-grid content-archive" >
+    <cwc-cell (click)="openModalPhotoIdentityCard()" class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Tomar fotografía</h5>
+      </div>
+    </cwc-cell>
+    <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Seleccionar archivo</h5>
+      </div>
+    </cwc-cell>
+</cwc-grid>
+</div>
+<div *ngIf="addIdentityCard">
+  <cwc-grid class="demo-grid content-archive" >
+    <cwc-cell (click)="openModalPhotoIdentityCard()" class="" colspan="12" mobile-colspan="12">
+      <div class="item-archives">
+        <cwc-icon name="attachment" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Cédula de Ciudadanía agregada </h5>
+        <cwc-icon (click)="removeIdentityCard()" name="close" size="20px" color="bright-blue" style="margin-left: 1rem; cursor: pointer;"></cwc-icon>
+      </div>
+    </cwc-cell>
+  </cwc-grid>
+</div>
+
+<!--=====================================
+    MENSAJES DE ERROR
+  ======================================-->
+  <app-error-messages [errors]="errors"></app-error-messages> 
+  <!--=====================================
+    BOTON PARA GUARDAR EL REGISTRO
+  ======================================-->
+      <div class="content-button">
+        <cwc-button 
+        design-version="v1" 
+        [disabled]="form.invalid"
+        (click)="openAlertConfirm()" 
+        variant="regular-block">COMPLETAR REGISTRO</cwc-button>
+      </div>
+</form>
+<!--=====================================
+		Si NO EXISTEN TRANSPORTADORES
+======================================-->
+<div *ngIf="!listConveyors.length">
+  <div class="p-all-reg" style="background: #F4F6F9">
+    <cwc-empty-result header="Error al generar el formulario" icon="error-rounded-fill">
+        No hay transportadores registrados, actualice e intente nuevamente o consulte <a [routerLink]="['/help']" routerLinkActive="router-link-active" >ayuda</a> de Cemex.
+    </cwc-empty-result>
+  </div>
+</div>
+<!--=====================================
+		MODAL AGREGAR FOTOGRAFICA LICENCIA
+======================================-->
+<app-photo-driving-licence
+[modalPhotoLinceShow] = "openPhotoDrivingLicence"
+></app-photo-driving-licence>
+
+<!--=====================================
+		MODAL AGREGAR FOTOGRAFICA LICENCIA
+======================================-->
+<app-photo-indentity-card
+[modalPhotoIdentityCardShow] = "openPhotoIdentityCard"
+></app-photo-indentity-card>
+
+
+
+<!--=====================================
+		MODAL ALERTA CONFIRMAR DATOS GUARDAR
+======================================-->
+<cwc-modal id='alert-confirm' class="alert-confirm" [open] ="alertConfirm" (cwcClose)="closeAlertConfirm()">
+  <header slot='header'>
+      <h2 style='margin:0;'>Atención</h2>
+  </header>
+  <p>¿Esta seguro que los datos registrados estan correctos?</p>
+  <footer slot='footer'>
+      <div style='text-align: end'>
+        <cwc-button variant='support' (click)="closeAlertConfirm()" style="margin-right: 1rem;">Cancelar</cwc-button>
+          <cwc-button variant='primary' (click)="register()" >Aceptar</cwc-button>
+      </div>
+  </footer>
+</cwc-modal>
+<!--=====================================
+	MODAL CONFIRMACIÓN RESPUESTA DE EXITO
+======================================-->
+<app-alert-success
+[alertShow] = "alertSucces"
+title = "Existoso"
+urlButton = "/login"
+textButton = "Volver al login"
+message = "El registro se realizó correctamente, vamos a validar sus datos y pronto daremos respuesta.">
+</app-alert-success>
+
+<!--=====================================
+	TOAST ALERT MENSAJE
+======================================-->
+<cwc-snackbar id='toast-message-driver' [message]="toastMessage"
+cta-message="dismiss" auto-hide-duration='5000'></cwc-snackbar>

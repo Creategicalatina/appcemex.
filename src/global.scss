@@ -24,3 +24,171 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+    font-family: "dls-icons";
+    src: url(https://www.cemexgo.com/cdn/dls-icons.eot);
+    src: url(https://www.cemexgo.com/cdn/dls-icons.eot#iefix) format("embedded-opentype"),
+      url(https://www.cemexgo.com/cdn/dls-icons.ttf) format("truetype"),
+      url(https://www.cemexgo.com/cdn/dls-icons.woff) format("woff"), url(https://www.cemexgo.com/cdn/dls-icons.svg#dls-icons)
+        format("svg");
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: "dls-icons-rtl";
+    src: url(https://www.cemexgo.com/cdn/dls-icons-rtl.eot);
+    src: url(https://www.cemexgo.com/cdn/dls-icons-rtl.eot#iefix) format("embedded-opentype"),
+      url(https://www.cemexgo.com/cdn/dls-icons-rtl.ttf) format("truetype"),
+      url(https://www.cemexgo.com/cdn/dls-icons-rtl.woff) format("woff"), url(https://www.cemexgo.com/cdn/dls-icons-rtl.svg#dls-icons)
+        format("svg");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+ion-content{
+ --ion-background-color:#F4F6F9  !important;
+}
+.ion-page{
+  background: #F4F6F9  !important;
+}
+.content{
+  padding: 32px; flex: 1 1 auto
+}
+@font-face {
+  font-family: 'Roboto-medium';
+  src: url('../src/assets/fonts/Roboto-Medium.ttf');
+}
+
+h1, h2, h3, h4, h5, h6{
+  font-family: 'Roboto-medium' !important;
+}
+
+@font-face {
+  font-family: 'Roboto-light';
+  src: url('../src/assets/fonts/Roboto-Light.ttf');
+}
+body, span, button, p{
+  font-family: 'Roboto-light' !important;
+}
+.title-default{
+  font-family: 'Roboto-medium' !important;
+}
+.input{
+  width: 100%;
+  margin-bottom: 1rem !important;
+}
+.border-red{
+  background: rgb(230, 12, 12);
+  border: 1px solid rgb(230, 12, 12);
+}
+.border-gray{
+  background: rgba(214, 214, 214, 0.87);
+  border: 0.5px solid rgba(214, 214, 214, 0.87);
+}
+#alert-modal-succes{
+  z-index: 9999999 !important;
+}
+.alert-confirm{
+  z-index: 9999999 !important;
+}
+.modal-cemex{
+  z-index: 9999999 !important;
+}
+#container {
+  position: absolute;
+  top: 10%;
+  transform: translateY(-50%);
+  width: 90%;
+  right: 0;
+  max-width: 90%;
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #8c8c8c;
+
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+.loading-content{
+  background: rgba(255, 255, 255, 0.63);
+  width: 100%;
+  height: 100vh;
+  position:absolute;
+  z-index: 999999999 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.loading-content-register{
+  background: rgba(255, 255, 255, 0.63);
+  width: 100%;
+  height: 100vh;
+  position:absolute;
+  z-index: 999999999 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+h1.text-black{
+  color: black;
+}
+.content-empty-result{
+  width: 100%;
+  height: 100vh;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.select-filter{
+  width: 100% !important;
+}
+
+.section{
+  margin-bottom: 0.5rem;
+}
+.item-archives{
+  display: flex;
+  align-items: center;
+}
+.item-archives h5{
+  margin-top: 6px;
+}
+.text-archive{
+  margin-left: 0.5rem;
+  color: #3FA9F5;
+}
+.content-archive{
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+.content-archive .border{
+  border-right: 1.5px solid #3FA9F5;;
+}
+.contend-upload-camera{
+  // margin-top: 1rem;
+  width: 100%;
+  height: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed #c7c7c7;
+  background-color: #F4F6F9 ;
+}
+
+.img-photo-register{
+  width: 100%;
+  height: 100%;
+}

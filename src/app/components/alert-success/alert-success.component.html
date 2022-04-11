@@ -1,0 +1,12 @@
+<cwc-modal id='alert-modal-succes' [open] ="alertShow">
+    <div style='text-align: center'>
+        <cwc-icon name='accepted-ok' size='120px' color='bright-green'></cwc-icon>
+        <h4 class='modal--confirmation__message'>{{ title }}</h4>
+        <p>{{ message }}</p>
+    </div>
+    <footer slot='footer'>
+      <div style='text-align: end'>
+          <cwc-button variant='primary' (click)="go()" routerLinkActive="router-link-active" >{{ textButton}}</cwc-button>
+      </div>
+  </footer>
+  </cwc-modal>

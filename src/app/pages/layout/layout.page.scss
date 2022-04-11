@@ -1,0 +1,25 @@
+.content-avatar-menu{
+ padding-top: 0.8rem; 
+ padding-left: 0.8rem; 
+ display: flex;
+}
+.text-name-menu{
+ margin-left: 0.5rem; 
+ margin-top: 0.4rem;
+}
+.wrapper:hover {
+    background-color: #E8EBEF;
+}
+.flex.content-notification{
+    display: flex;
+}
+.badge-notification{
+    // width: 1.5rem !important;
+    // height: 1.5rem !important;
+    text-align: center;
+    line-height: 1rem;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block !important;
+    // padding: 0.2rem;
+}

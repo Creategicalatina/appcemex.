@@ -1,0 +1,46 @@
+<div slot="main" class="content-grid-reset-password content">
+  <form (submit)="sendEmail()" [formGroup]="form">
+  <cwc-grid class="demo-grid" design-version="v2" columns="12" mobile-columns="12">
+    <cwc-cell colspan="12" mobile-colspan="12">
+        <h3 class="title-reset-password">¿Olvidó su contraseña?</h3>
+        <div class="border-red"></div>
+        <h6 class="subtitle-reset-password">Ingrese su correo electrónico para recuperar su contraseña</h6>
+        <div class="content-form-reset-password">
+          <cwc-input class="input-email-reset-password input" 
+                  design-version="v2" 
+                  [status]='statusInputEmail'
+                  [statusMessage]='statusInputMessageEmail'
+                  label='Correo electrónico'
+                  formControlName="email"
+                  ngDefaultControl
+                  required 
+                  ></cwc-input>
+            <cwc-button class="btn-login" 
+                  [disabled]="form.invalid"
+                  (click)="sendEmail()" 
+                  design-version="v1" 
+                  disabled="false" 
+                  variant="primary-block">RECUPERAR CONTRASEÑA</cwc-button>
+                  <app-error-messages [errors]="errors"></app-error-messages> 
+                  <p class="text-message-email">Envíaremos a su correo electrónico con un link para que recupere su contraseña</p>
+                  <div class="button">
+                    <cwc-button variant="link" [routerLink]="['/login']" routerLinkActive="router-link-active"  leading-icon="arrow-left-straight">Iniciar Sesión</cwc-button>
+                </div>
+        </div>
+    </cwc-cell>
+  </cwc-grid>
+  </form>
+</div>
+<div class="loading-content" *ngIf="loading">
+  <cwc-loader>
+    <span slot='loading'>Espere un momento...</span>
+    <span slot='delay'>Enviando correo electrónico...</span>
+  </cwc-loader>
+</div>
+<app-alert-success
+[alertShow] = "alertSucces"
+title = "Existoso" 
+urlButton = "/login"
+textButton = "Volver al login"
+message = "Envíamos un correo electrónico con las instrucciones para que pueda reestablecer su contraseña">
+</app-alert-success>

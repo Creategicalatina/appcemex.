@@ -1,16 +1,51 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
+   {
+     path: 'main',
+     loadChildren: () => import('./pages/layout/layout.module').then( m => m.LayoutPageModule),
+     canLoad: [AuthGuard]
+   },
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'login',
+    loadChildren: () => import('./auth/pages/login/login.module').then( m => m.LoginPageModule),
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'reset-password-email',
+    loadChildren: () => import('./auth/pages/password/email/email.module').then( m => m.EmailPageModule),
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'app',
+    children: [
+      {
+        path: 'home',
+        loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule),
+        canLoad:[AuthGuard]
+      },
+      {
+        path: 'list-drivers',
+        loadChildren: () => import('./pages/admin-logist/drivers/drivers/drivers.module').then( m => m.DriversPageModule),
+        canLoad:[AuthGuard],
+      },
+      {
+        path: 'list-travels',
+        loadChildren: () => import('./pages/driver/travels/travels.module').then( m => m.TravelsPageModule),
+        canLoad:[AuthGuard],
+      },
+    ]
+  },
+
+    {
+      path: '',
+      redirectTo: '/app/home',
+      pathMatch: 'full'
+    },
 ];
 
 @NgModule({

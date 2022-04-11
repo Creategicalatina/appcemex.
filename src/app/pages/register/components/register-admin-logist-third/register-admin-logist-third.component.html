@@ -1,0 +1,138 @@
+<form (submit)="register()" [formGroup]="form">
+  <cwc-grid class="demo-grid" design-version="v2" columns="12" mobile-columns="12">
+    <cwc-cell colspan="12" mobile-colspan="12">
+      <div class="section">
+        <cwc-input class="input" 
+                   label='Nombre (s)'
+                   [status]='statusInputName'
+                   [statusMessage]='statusInputMessageName'
+                   design-version="v2" 
+                   formControlName="firstName"
+                   ngDefaultControl
+                   required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+                   label='Apellido (s)'
+                   [status]='statusInputLastName'
+                   [statusMessage]='statusInputMessageLastName'
+                   formControlName="lastName"
+                   design-version="v2" 
+                   ngDefaultControl
+                   required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='Correo electrónico'
+        [status]='statusInputEmail'
+        [statusMessage]='statusInputMessageEmail'
+        formControlName="email"
+        ngDefaultControl
+        design-version="v2" 
+        required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='N° documento'
+        [status]='statusInputDocument'
+        [statusMessage]='statusInputMessageDocument'
+        formControlName="document"
+        design-version="v2" 
+        ngDefaultControl
+        required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='Código SAP'
+        [status]='statusInputSap'
+        [statusMessage]='statusInputMessageSap'
+        formControlName="codeSap"
+        design-version="v2"
+        ngDefaultControl
+        required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='Número de celular'
+        type="number"
+        [status]='statusInputPhone'
+        [statusMessage]='statusInputMessagePhone'
+        formControlName="phoneNumber"
+        design-version="v2"
+        ngDefaultControl
+        required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='Nombre empresa'
+        [status]='statusInputCompany'
+        [statusMessage]='statusInputMessageCompany'
+        formControlName="nameCompany"
+        design-version="v2"
+        ngDefaultControl
+        required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='N° Nit'
+        [status]='statusInputNit'
+        [statusMessage]='statusInputMessageNit'
+        formControlName="nitCompany"
+        design-version="v2" 
+        ngDefaultControl
+        required
+        ></cwc-input>
+      </div>
+    </cwc-cell>
+  </cwc-grid>
+  <!--=====================================
+    COMPONENTE PARA SUBIR ARCHIVOS
+  ======================================-->
+    <app-archives-register></app-archives-register>
+    <!--=====================================
+    COMPONENTE PARA MOSTRAR LOS ERRORES DESDE EL SERVIDOR
+  ======================================-->
+    <app-error-messages [errors]="errors"></app-error-messages> 
+  <!--=====================================
+    BOTON PARA GUARDAR EL REGISTRO
+  ======================================-->
+    <div class="content-button">
+      <cwc-button 
+      design-version="v1" 
+      [disabled]="form.invalid"
+      (click)="openAlertConfirm()" 
+      variant="regular-block">COMPLETAR REGISTRO</cwc-button>
+    </div>
+</form>
+<!--=====================================
+		MODAL ALERTA CONFIRMAR DATOS GUARDAR
+======================================-->
+<cwc-modal id='alert-confirm' class="alert-confirm" [open] ="alertConfirm" (cwcClose)="closeAlertConfirm()">
+  <header slot='header'>
+      <h2 style='margin:0;'>Atención</h2>
+  </header>
+  <p>¿Esta seguro que los datos registrados estan correctos?</p>
+  <footer slot='footer'>
+      <div style='text-align: end'>
+        <cwc-button variant='support' (click)="closeAlertConfirm()" style="margin-right: 1rem;">Cancelar</cwc-button>
+          <cwc-button variant='primary' (click)="register()" >Aceptar</cwc-button>
+      </div>
+  </footer>
+</cwc-modal>
+<!--=====================================
+		MODAL CONFIRMACIÓN RESPUESTA DE EXITO
+======================================-->
+<app-alert-success
+[alertShow] = "alertSucces"
+title = "Existoso"
+urlButton = "/login"
+textButton = "Volver al login"
+message = "El registro se realizó correctamente, vamos a validar sus datos y pronto daremos respuesta.">
+</app-alert-success>

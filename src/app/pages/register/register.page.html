@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div slot="main" class="content-grid-register content" *ngIf="!showError">
+  <div class="content-title-register">
+    <h2>Crear solicitud</h2>
+  </div>
+  <div class="section">
+    <form [formGroup]="formTypeConveyor">
+        <cwc-radio-group  ngDefaultControl formControlName="typeConveyorId"  (cwcChange)="cwcChange($event)" label='Actuará como'>
+          <div *ngFor="let typeConveyor of typeConveyors">
+            <cwc-radio  [value]='typeConveyor.idTypeConveyor'>
+              <p *ngIf="typeConveyor.nameTypeConveyor === 'AdminLogis'">Admin. Logístico Tercero</p>
+              <p *ngIf="typeConveyor.nameTypeConveyor === 'ManTruck'">Hombre Camión</p>
+              <p *ngIf="typeConveyor.nameTypeConveyor === 'Driver'">Conductor</p>
+              <cwc-tooltip [content]='typeConveyor.descriptionTypeConveyor'>
+                 <cwc-icon style="margin-left: 0.5rem;" id='icon' name='information-rounded-fill' color="bright-blue" size='24px'></cwc-icon>
+              </cwc-tooltip>
+           </cwc-radio>
+           <br/>
+           <br/>
+          </div>
+        </cwc-radio-group>
+      </form>
+    </div>
+  <!--=====================================
+		FORMULARIO DE REGISTRO HOMBRE CAMIÓN
+  ======================================-->
+  <div *ngIf="showFormManTruck">
+    <app-register-mantruck 
+    (propagar)="showLoading($event)" 
+    [typeConveyor]="selectTypeConveyor">
+  </app-register-mantruck>
+  </div>
+  <!--=====================================
+		FORMULARIO DE REGISTRO ADMINISTRADOR LOGISTICO TERCERO
+  ======================================-->
+  <div *ngIf="showFormAdminLogist">
+    <app-register-admin-logist-third
+    (propagar)="showLoading($event)"
+    [typeConveyor]="selectTypeConveyor"
+    ></app-register-admin-logist-third>
+  </div>
+  <!--=====================================
+		FORMULARIO DE REGISTRO CONDUCTOR
+  ======================================-->
+  <div *ngIf="showFormDriver">
+    <app-register-driver 
+    (propagar)="showLoading($event)" 
+    [typeConveyor]="selectTypeConveyor">
+    </app-register-driver>
+  </div>
+</div>
+<!--=====================================
+		LOANDING
+======================================-->
+<div class="loading-content" *ngIf="loading">
+  <cwc-loader>
+    <span slot='loading'>Espere un momento...</span>
+  </cwc-loader>
+</div>
+<!--=====================================
+		CONTENEDOR SI HAY UN ERROR DE SERVIDOR
+======================================-->
+<div class="content-empty-result" *ngIf="showError">
+  <div class="p-all-reg" style="background: #F4F6F9">
+    <cwc-empty-result header="Error al generar el formulario" icon="error-rounded-fill">
+        Error en el servidor, 
+        por favor consulte con el administrador o <a [routerLink]="['/help']" routerLinkActive="router-link-active" >ayuda</a> de Cemex.
+    </cwc-empty-result>
+</div>

@@ -1,0 +1,60 @@
+<div slot="main" class="content-grid-login content">
+  <form  (submit)="login()" [formGroup]="form">
+  <cwc-grid class="demo-grid" design-version="v2" columns="12" mobile-columns="12">
+    <cwc-cell colspan="12" mobile-colspan="12">
+      <div class="content-title-welcome">
+        <h1>Bienvenido</h1>
+        <div class="border-red"></div>
+      </div>
+      <div class="content-title-login">
+        <h4>Iniciar Sesión</h4>
+      </div>
+        <cwc-input class="input-login input" 
+                   [status]='statusInputEmail'
+                   [statusMessage]='statusInputMessageEmail'
+                   label='Correo electrónico'
+                   formControlName="email"
+                   design-version="v2" 
+                   required
+                   ></cwc-input>
+        <cwc-input class="input-login input"
+                   [status]="statusInputPassword"
+                   [statusMessage]='statusInputMessagePassword'
+                   design-version="v2" 
+                   formControlName="password"
+                   type='password' 
+                   label='Contraseña'
+                   allow-password-show='true'
+                   required 
+                   ></cwc-input>
+                   <div class="content-message-error-login">
+                    <span class="cwc-status-message" aria-live="assertive" id="cwc-input-1-error">{{message}}</span>
+                   </div>
+        <cwc-button class="btn-login" 
+                    [disabled]="form.invalid"
+                    (click)="login()" 
+                    design-version="v1" 
+                    variant="primary-block">INICIAR SESIÓN</cwc-button>
+                  
+        <app-error-messages [errors]="errors"></app-error-messages>  
+        <cwc-button variant="link" class="link-forgot-password" [routerLink]="['/reset-password-email']" routerLinkActive="router-link-active" >¿Olvidó su contraseña?</cwc-button>           
+    </cwc-cell>
+  </cwc-grid>
+<cwc-grid>
+<cwc-cell colspan="12" mobile-colspan="12">
+  <div class="content-line-login">
+    <div class="border-gray"></div>
+  </div>
+  <div>
+    <h6 class="text-not-account">¿Aún no tienes cuenta? <span [routerLink]="['/register']" routerLinkActive="router-link-active" >Registrate</span></h6>
+  </div>
+</cwc-cell>
+</cwc-grid>
+</form>
+<cwc-snackbar id='snackbar' message="{{message}}" cta-message="dismiss" auto-hide-duration='5000'></cwc-snackbar>
+</div>
+<div class="loading-content" *ngIf="loading">
+  <cwc-loader>
+    <span slot='loading'>Espere un momento...</span>
+  </cwc-loader>
+</div>

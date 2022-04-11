@@ -1,0 +1,77 @@
+<cwc-page design-version="v2" variant="positive">
+
+    <cwc-header design-version="v2" slot="header" show-cemex-logo="true" show-Menu-Button="true">
+        <!-- <cwc-overlay design-version="v2" min-width="300px" variant="popover" height="286px">
+            <div slot="target" class="flex content-notification flex__align--center m-end-xs" >
+                <cwc-button variant="link" leading-icon="notification" white size="medium" class="m-end-xs">Notificaciones</cwc-button>
+                <div class="display-inline-block p-all-xs border-radius--circle bg--true-red badge-notification" style="width: 1rem; height: 1rem; text-align: center; line-height: 1rem;">2</div>
+            </div>
+        </cwc-overlay> -->
+    </cwc-header>
+  
+
+    <cwc-sidenav slot="sidenav" variant="positive">
+        <!-- <cwc-entity-selector slot="legal-entity-selection" variant="positive">
+            <cwc-entity-selector-item entity-icon="user" entity-name="Amanda Lopez" entity-id="Hombre Camnión" active>
+                <cwc-avatar size="small" variant="negative" name="Michael Wasserman" class="m-h-xs"></cwc-avatar>
+            </cwc-entity-selector-item>
+            <cwc-entity-selector-item entity-name="Grand Valley Construction" entity-id="#1323555"></cwc-entity-selector-item>
+        </cwc-entity-selector> -->
+    
+        <cwc-sidenav-menu id="menuNav" slot="menu-items" variant="positive">
+            <!-- <div class="content-avatar-menu">
+                <cwc-avatar size="small" variant="negative" [name]="user.name" class="m-h-xs"></cwc-avatar>
+                 <p class="text-name-menu">{{ user.name }}</p>
+            </div> -->
+            
+            <!-- <div>
+                <ul *ngFor="let menudDriver of menu">
+                    <li>
+                        <cwc-icon name="module-customer-information" color="true-black"></cwc-icon>
+                        {{menudDriver.title}}
+                    </li>
+                </ul>
+            </div> -->
+            <!-- <cwc-sidenav-menu-item *ngFor="let menudDriver of menu" [label]="menudDriver.title" [iconName]="menudDriver.icon" [routerLink]="menudDriver.url" routerLinkActive="router-link-active" ></cwc-sidenav-menu-item> -->
+
+            <!-- <div *ngFor="let menudDriver of menu">
+                <cwc-sidenav-menu-item *ngIf="menudDriver.show"  [label]="menudDriver.title" [routerLink]="menudDriver.url" routerLinkActive="router-link-active" ></cwc-sidenav-menu-item>
+            </div> -->
+        <cwc-sidenav-menu-item  label="Inicio" [iconName]="'radio-static'" [routerLink]="['/app/home']" routerLinkActive="router-link-active"  ></cwc-sidenav-menu-item>
+        <cwc-sidenav-menu-item  label="Mis viajes" [iconName]="'radio-static'" [routerLink]="['/app/travels']" routerLinkActive="router-link-active"  ></cwc-sidenav-menu-item>
+        <cwc-sidenav-menu-item  label="Buscar viaje" [iconName]="'radio-static'" [routerLink]="['/app/search-travel']" routerLinkActive="router-link-active"  ></cwc-sidenav-menu-item>
+        <cwc-sidenav-menu-item  label="Notificaciones" [iconName]="'radio-static'" [routerLink]="['/app/notifications']" routerLinkActive="router-link-active"  ></cwc-sidenav-menu-item>
+        <cwc-sidenav-menu-item  label="Lista de espera" [iconName]="'radio-static'" [routerLink]="['/app/waiting-list']" routerLinkActive="router-link-active"  ></cwc-sidenav-menu-item>
+        <cwc-sidenav-menu-item *ngIf="notDriver"  label="Vehículos" [iconName]="'radio-static'" [routerLink]="['/app/vehicles']" routerLinkActive="router-link-active"  ></cwc-sidenav-menu-item>
+        <cwc-sidenav-menu-item *ngIf="notDriver" label="Conductores" [iconName]="'radio-static'" [routerLink]="['/app/drivers']" routerLinkActive="router-link-active"  ></cwc-sidenav-menu-item>
+        <cwc-sidenav-menu-item  label="Llamar a centro de servicio" [iconName]="'radio-static'" [routerLink]="['/app/call-service']" routerLinkActive="router-link-active"  ></cwc-sidenav-menu-item>
+
+        </cwc-sidenav-menu>
+        <cwc-footer-menu slot="links">
+            <cwc-footer-menu-item label="Legal" href="https://www.cemex.com/legal" target="_blank"></cwc-footer-menu-item>
+            <cwc-footer-menu-item label="Privacy" onclick="window.alert('Triggered by a javascript function')"></cwc-footer-menu-item>
+            <cwc-footer-menu-item label="cemex.com" href="https://www.cemex.com" target="_blank"></cwc-footer-menu-item>
+        </cwc-footer-menu>
+    
+        <div slot="copyright">
+            <div class="button" (click)="logout()">
+                <cwc-button variant="link">Cerrar Sesión</cwc-button>
+            </div>
+            <cwc-button *ngIf="showButtonDriver" class="btn-login" 
+            design-version="v2" 
+            disabled="false" 
+            variant="primary-block">Ser Conductor</cwc-button>
+            <br>
+            © 2017-2019 CEMEX
+            International<br /> Holding AG.
+            All rights reserved.
+        </div>
+    </cwc-sidenav>
+  
+  
+    <div slot="main" style="padding: 32px; flex: 1 1 auto">
+        <!-- <h1 style="margin-top: 0">Page Demo</h1>
+        <ion-router-outlet style="flex: 1 1 auto;"></ion-router-outlet> -->
+        <ng-content></ng-content>
+      </div>
+  </cwc-page>

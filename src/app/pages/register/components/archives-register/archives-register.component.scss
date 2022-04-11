@@ -1,0 +1,21 @@
+.section{
+    margin-bottom: 0.5rem;
+}
+.item-archives{
+    display: flex;
+    align-items: center;
+}
+.item-archives h5{
+    margin-top: 6px;
+}
+.text-archive{
+    margin-left: 0.5rem;
+    color: #3FA9F5;
+}
+.content-archive{
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.content-archive .border{
+    border-right: 1.5px solid #3FA9F5;;
+}
