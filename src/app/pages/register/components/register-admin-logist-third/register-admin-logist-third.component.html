@@ -47,17 +47,6 @@
       </div>
       <div class="section">
         <cwc-input class="input" 
-        label='Código SAP'
-        [status]='statusInputSap'
-        [statusMessage]='statusInputMessageSap'
-        formControlName="codeSap"
-        design-version="v2"
-        ngDefaultControl
-        required
-        ></cwc-input>
-      </div>
-      <div class="section">
-        <cwc-input class="input" 
         label='Número de celular'
         type="number"
         [status]='statusInputPhone'
@@ -92,13 +81,69 @@
       </div>
     </cwc-cell>
   </cwc-grid>
-  <!--=====================================
-    COMPONENTE PARA SUBIR ARCHIVOS
-  ======================================-->
-    <app-archives-register></app-archives-register>
-    <!--=====================================
-    COMPONENTE PARA MOSTRAR LOS ERRORES DESDE EL SERVIDOR
-  ======================================-->
+   <!--=====================================
+      DOCUMENTO DE LA EMPRESA
+    ======================================-->
+    <label for="">Documento de la empresa (opcional)</label>
+<div *ngIf="!form.get('documentCompany').value">
+  <cwc-grid class="demo-grid content-archive" >
+    <cwc-cell (click)="openModalPhotoDocumentCompany()" class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Tomar fotografía</h5>
+      </div>
+    </cwc-cell>
+    <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Seleccionar archivo</h5>
+      </div>
+    </cwc-cell>
+</cwc-grid>
+</div>
+  <div *ngIf="addDocumentCompany">
+    <cwc-grid class="demo-grid content-archive" >
+      <cwc-cell (click)="openModalPhotoDocumentCompany()" class="" colspan="12" mobile-colspan="12">
+        <div class="item-archives">
+          <cwc-icon name="attachment" size="28px" color="bright-blue"></cwc-icon>
+          <h5 class="text-archive">Documento agregado</h5>
+          <cwc-icon (click)="removeDocumentCompany()" name="close" size="20px" color="bright-blue" style="margin-left: 1rem; cursor: pointer;"></cwc-icon>
+        </div>
+      </cwc-cell>
+    </cwc-grid>
+  </div>
+   <!--=====================================
+      CEDULA DE CIUDADANIA
+    ======================================-->
+<label for="">Cédula de ciudadania (opcional)</label>
+<div *ngIf="!form.get('documentIdentityCardFrontal').value && !form.get('documentIdentityCardBack').value">
+  <cwc-grid class="demo-grid content-archive" >
+    <cwc-cell (click)="openModalPhotoIdentityCard()" class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Tomar fotografía</h5>
+      </div>
+    </cwc-cell>
+    <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+      <div class="item-archives">
+        <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Seleccionar archivo</h5>
+      </div>
+    </cwc-cell>
+</cwc-grid>
+</div>
+  <div *ngIf="addIdentityCard">
+    <cwc-grid class="demo-grid content-archive" >
+      <cwc-cell (click)="openModalPhotoIdentityCard()" class="" colspan="12" mobile-colspan="12">
+        <div class="item-archives">
+          <cwc-icon name="attachment" size="28px" color="bright-blue"></cwc-icon>
+          <h5 class="text-archive">Cédula de Ciudadanía agregada </h5>
+          <cwc-icon (click)="removeIdentityCard()" name="close" size="20px" color="bright-blue" style="margin-left: 1rem; cursor: pointer;"></cwc-icon>
+        </div>
+      </cwc-cell>
+    </cwc-grid>
+  </div>
+    
     <app-error-messages [errors]="errors"></app-error-messages> 
   <!--=====================================
     BOTON PARA GUARDAR EL REGISTRO
@@ -111,6 +156,13 @@
       variant="regular-block">COMPLETAR REGISTRO</cwc-button>
     </div>
 </form>
+
+<app-photo-indentity-card
+[modalPhotoIdentityCardShow] = "openPhotoIdentityCard"
+></app-photo-indentity-card>
+<app-document-company
+[modalPhotoDocumentCompanyShow] = "openPhotoDocumentCompany"
+></app-document-company>
 <!--=====================================
 		MODAL ALERTA CONFIRMAR DATOS GUARDAR
 ======================================-->
@@ -136,3 +188,8 @@ urlButton = "/login"
 textButton = "Volver al login"
 message = "El registro se realizó correctamente, vamos a validar sus datos y pronto daremos respuesta.">
 </app-alert-success>
+<!--=====================================
+	TOAST ALERT MENSAJE
+======================================-->
+<cwc-snackbar id='toast-message-driver' [message]="toastMessage"
+cta-message="dismiss" auto-hide-duration='5000'></cwc-snackbar>

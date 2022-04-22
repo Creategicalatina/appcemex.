@@ -118,20 +118,33 @@
 </div>
 
 <label for="">Carné de seguridad industrial y vial (opcional)</label>
+<div *ngIf="!form.get('documentSecurityCard').value">
+    <cwc-grid class="demo-grid content-archive" >
+      <cwc-cell (click)="openModalPhotoSecurityCard()" class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+        <div class="item-archives">
+          <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+          <h5 class="text-archive">Tomar fotografía</h5>
+        </div>
+      </cwc-cell>
+      <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+        <div class="item-archives">
+          <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+          <h5 class="text-archive">Seleccionar archivo</h5>
+        </div>
+      </cwc-cell>
+  </cwc-grid>
+</div>
+<div *ngIf="addSecurityCard">
   <cwc-grid class="demo-grid content-archive" >
-    <cwc-cell class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+    <cwc-cell (click)="openModalPhotoSecurityCard()" class="" colspan="12" mobile-colspan="12">
       <div class="item-archives">
-        <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
-        <h5 class="text-archive">Tomar fotografía</h5>
+        <cwc-icon name="attachment" size="28px" color="bright-blue"></cwc-icon>
+        <h5 class="text-archive">Carné de seguridad industrial y vial agregado </h5>
+        <cwc-icon (click)="removeSecurityCard()" name="close" size="20px" color="bright-blue" style="margin-left: 1rem; cursor: pointer;"></cwc-icon>
       </div>
     </cwc-cell>
-    <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
-      <div class="item-archives">
-        <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
-        <h5 class="text-archive">Seleccionar archivo</h5>
-      </div>
-    </cwc-cell>
-</cwc-grid>
+  </cwc-grid>
+</div>
 
 <label for="">Cédula de ciudadania (opcional)</label>
 <div *ngIf="!form.get('documentIdentityCardFrontal').value && !form.get('documentIdentityCardBack').value">
@@ -195,13 +208,18 @@
 ></app-photo-driving-licence>
 
 <!--=====================================
-		MODAL AGREGAR FOTOGRAFICA LICENCIA
+		MODAL AGREGAR FOTOGRAFIA CEDULA
 ======================================-->
 <app-photo-indentity-card
 [modalPhotoIdentityCardShow] = "openPhotoIdentityCard"
 ></app-photo-indentity-card>
 
-
+<!--=====================================
+		MODAL AGREGAR FOTOGRAFIA CARNE DE SEGURIDAD
+======================================-->
+<app-security-card
+[modalPhotoSecurityCardShow] = "openPhotoSecurityCard"
+></app-security-card>
 
 <!--=====================================
 		MODAL ALERTA CONFIRMAR DATOS GUARDAR

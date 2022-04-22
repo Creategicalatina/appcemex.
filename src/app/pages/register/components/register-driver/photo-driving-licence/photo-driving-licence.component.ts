@@ -6,8 +6,6 @@ import { PhotoCamera } from 'src/app/interfaces/photoCamera/photoCamera';
 import { ConveyorService } from 'src/app/services/conveyor/conveyor.service';
 import { ConvertPhotoCameraService } from 'src/app/services/convert-photo-camera/convert-photo-camera.service';
 
-
-
 @Component({
   selector: 'app-photo-driving-licence',
   templateUrl: './photo-driving-licence.component.html',

@@ -19,6 +19,14 @@ export class RegisterMantruckComponent implements OnInit {
 
   alertSucces = false;
   alertConfirm = false;
+  addLicence = false;
+  addSecurityCard = false;
+  addIdentityCard = false;
+  toastMessage = '';
+
+  openPhotoDrivingLicence = false;
+  openPhotoIdentityCard = false;
+  openPhotoSecurityCard = false;
 
   errors: string[] = [];
 
@@ -50,6 +58,68 @@ export class RegisterMantruckComponent implements OnInit {
     this.alertSucces = false;
     this.formBuilderInput();
     this.form.get('typeConveyorId').setValue(this.typeConveyor);
+
+    this.conveyorService.closeModalArchiveSecurityCard.subscribe(resp =>{
+      this.openPhotoSecurityCard = resp;
+    });
+    this.conveyorService.frontalArchiveSecurityCard.subscribe(resp =>{
+      this.form.get('documentSecurityCard').setValue(resp);
+    });
+    this.conveyorService.removePhotoFrontalSecurityCard.subscribe(resp =>{
+      this.form.get('documentSecurityCard').setValue('');
+    });
+    this.conveyorService.addPhotoSecurityCard.subscribe(resp =>{
+      this.addSecurityCard = true;
+      this.toastMessage = 'Carné de seguridad agregado';
+      const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+    });
+
+
+    this.conveyorService.closeModalArchiveLicenceDriver.subscribe(resp =>{
+      this.openPhotoDrivingLicence = resp;
+    });
+    this.conveyorService.frontalArchiveLicenceDriver.subscribe(resp =>{
+      this.form.get('documentDrivinglicenseFrontal').setValue(resp);
+    });
+    this.conveyorService.backArchiveLicenceDriver.subscribe(resp =>{
+      this.form.get('documentDrivinglicenseBack').setValue(resp);
+    });
+    this.conveyorService.removePhotoFrontalLicenceDriver.subscribe(resp =>{
+      this.form.get('documentDrivinglicenseFrontal').setValue('');
+    });
+    this.conveyorService.removePhotoBackLicenceDriver.subscribe(resp =>{
+      this.form.get('documentDrivinglicenseBack').setValue('');
+    });
+    this.conveyorService.addLicenceDriver.subscribe(resp =>{
+      this.addLicence = true;
+      this.toastMessage = 'Licencia de conducción agregada';
+      const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+    });
+
+
+    this.conveyorService.closeModalArchiveIdentityCardDriver.subscribe(resp =>{
+      this.openPhotoIdentityCard = resp;
+    });
+    this.conveyorService.frontalArchiveIdentityCardDriver.subscribe(resp =>{
+      this.form.get('documentIdentityCardFrontal').setValue(resp);
+    });
+    this.conveyorService.backArchiveIdentityCardDriver.subscribe(resp =>{
+      this.form.get('documentIdentityCardBack').setValue(resp);
+    });
+    this.conveyorService.removePhotoBackIdentityCardDriver.subscribe(resp =>{
+      this.form.get('documentIdentityCardFrontal').setValue('');
+    });
+    this.conveyorService.removePhotoBackIdentityCardDriver.subscribe(resp =>{
+      this.form.get('documentIdentityCardBack').setValue('');
+    });
+    this.conveyorService.addIdentityCardDriver.subscribe(resp =>{
+      this.addIdentityCard = true;
+      this.toastMessage = 'Cédula de ciudadanía agregada';
+      const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+    });
   }
 
   async register(){
@@ -60,11 +130,48 @@ export class RegisterMantruckComponent implements OnInit {
     await this.conveyorService.registerManTruck(this.form.value).subscribe(async resp =>{
       this.propagar.emit(false);
       this.form.reset();
+      this.conveyorService.removeModalLicenceDriver.emit();
+      this.conveyorService.removeModalIdentityCardDriver.emit();
+      this.conveyorService.removeModalSecurityCard.emit();
       this.alertSucces = true;
+      this.addLicence = false;
+      this.addIdentityCard = false;
+      this.addSecurityCard = false;
+      this.alertConfirm = false;
+      this.alertSucces = true;
+      this.errors = [];
     }, (error) =>{
       this.propagar.emit(false);
       this.errors = this.errorMessages.parsearErroresAPI(error);
     });
+  }
+
+  removeLicence(){
+    this.form.get('documentDrivinglicenseFrontal').setValue('');
+    this.form.get('documentDrivinglicenseBack').setValue('');
+    this.conveyorService.removeModalLicenceDriver.emit();
+    this.addLicence = false;
+    this.toastMessage = 'Se eliminó la licencia de conducción';
+    const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+  }
+
+  removeIdentityCard(){
+    this.form.get('documentIdentityCardFrontal').setValue('');
+    this.form.get('documentIdentityCardBack').setValue('');
+    this.conveyorService.removeModalIdentityCardDriver.emit();
+    this.addIdentityCard = false;
+    this.toastMessage = 'Se eliminó la cédula de ciudadanía';
+    const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+  }
+  removeSecurityCard(){
+    this.form.get('documentSecurityCard').setValue('');
+    this.conveyorService.removeModalSecurityCard.emit();
+    this.addSecurityCard = false;
+    this.toastMessage = 'Se eliminó el carné de seguridad';
+    const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
   }
 
   openAlertConfirm(){
@@ -76,6 +183,18 @@ export class RegisterMantruckComponent implements OnInit {
 
   closeAlertConfirm(){
     this.alertConfirm = false;
+  }
+
+  openModalPhotoLicence(){
+    this.openPhotoDrivingLicence = true;
+  }
+
+  openModalPhotoSecurityCard(){
+    this.openPhotoSecurityCard = true;
+  }
+
+  openModalPhotoIdentityCard(){
+    this.openPhotoIdentityCard = true;
   }
 
   /*=============================================
@@ -111,6 +230,11 @@ export class RegisterMantruckComponent implements OnInit {
         Validators.maxLength(10),
         Validators.pattern('^[0-9]*$')
       ]],
+      documentSecurityCard: '',
+      documentDrivinglicenseFrontal: '',
+      documentDrivinglicenseBack: '',
+      documentIdentityCardFrontal: '',
+      documentIdentityCardBack: '',
 
     });
     this.form.valueChanges

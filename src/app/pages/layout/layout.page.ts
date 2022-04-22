@@ -42,7 +42,8 @@ export class LayoutPage implements OnInit {
 
   async currentUser(){
     await this.storage.get('current_user').then(resp =>{
-      this.user.name = resp.firstName+' '+resp.lastNanme;
+      this.user.name = resp.user.firstName+' '+resp.user.lastName;
+      // this.user.name = 'Mauricio Perez';
     });
   }
 

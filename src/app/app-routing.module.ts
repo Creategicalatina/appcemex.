@@ -29,6 +29,18 @@ const routes: Routes = [
         canLoad:[AuthGuard]
       },
       {
+        path: 'profile',
+        loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+      },
+      {
+        path: 'edit',
+        loadChildren: () => import('./pages/profile/edit/edit.module').then( m => m.EditPageModule)
+      },
+      {
+        path: 'update-archives',
+        loadChildren: () => import('./pages/profile/update-archives/update-archives.module').then( m => m.UpdateArchivesPageModule)
+      },
+      {
         path: 'list-drivers',
         loadChildren: () => import('./pages/admin-logist/drivers/drivers/drivers.module').then( m => m.DriversPageModule),
         canLoad:[AuthGuard],

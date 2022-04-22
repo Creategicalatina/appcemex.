@@ -1,0 +1,49 @@
+<cwc-modal id='modal-photo-licence-driver' [open] ="modalPhotoLinceShow" class="modal-cemex" (cwcClose)="closeModalLicence()">
+  <header slot='header'>
+      <h2 style='margin:0;'>Actualizar licencia de conducción</h2>
+      <!--=====================================
+ ALERTA CON MENSAJES DESDE EL SERVIDOR
+======================================-->
+<div style="margin-top: 1rem; margin-bottom: 1rem;" *ngIf="errors">
+  <cwc-alert variant="error" [message]="errors" keep-open></cwc-alert>
+</div> 
+  </header>
+  <cwc-grid class="demo-grid" design-version="v2" columns="12" mobile-columns="12" style="margin-top: 2rem;" style="margin-bottom: 2rem">
+    <cwc-cell colspan="6" mobile-colspan="12" style="cursor: pointer; margin-top: 1rem;">
+      <label for="">1. Parte frontal de la licencia de conducción</label>
+      <div class="contend-upload-camera" (click)="openCameraOne()">
+
+          <ion-img class="img-photo-register" *ngIf="photoFrontal.webviewPath" [src]="photoFrontal.webviewPath" style="object-fit: cover;
+          max-height: 175px !important;"></ion-img>
+
+          <cwc-icon *ngIf="!photoFrontal.webviewPath" name="camera" color="bright-blue" size="30px" style="margin-right: 1rem;"></cwc-icon>
+          <p *ngIf="!photoFrontal.webviewPath">Abrir cámara del dispositivo</p>
+
+      </div>
+      <div class="center-remove-photo-archive">
+        <cwc-button (click)="removePhotoFrontal()" *ngIf="photoFrontal.webviewPath" variant="link" class="m-h-reg remove-photo-archive" style="margin-top: 0.7rem;">Quitar Foto</cwc-button>
+      </div>
+    </cwc-cell>
+    <cwc-cell colspan="6" mobile-colspan="12" style="cursor: pointer; margin-top: 1rem;">
+      <label for="">2. Parte trasera de la licencia de conducción</label>
+      <div class="contend-upload-camera" (click)="openCameraTwo()">
+
+        <ion-img class="img-photo-register" *ngIf="photoBack.webviewPath" [src]="photoBack.webviewPath" style="object-fit: cover;
+        max-height: 175px !important;"></ion-img>
+
+        <cwc-icon *ngIf="!photoBack.webviewPath" name="camera" color="bright-blue" size="30px" style="margin-right: 1rem;"></cwc-icon>
+        <p *ngIf="!photoBack.webviewPath">Abrir cámara del dispositivo</p>
+
+    </div>
+    <div class="center-remove-photo-archive">
+      <cwc-button  (click)="removePhotoBack()" *ngIf="photoBack.webviewPath" variant="link" class="m-h-reg remove-photo-archive" style="margin-top: 0.7rem;">Quitar Foto</cwc-button>
+    </div>
+    </cwc-cell>
+  </cwc-grid>
+  <footer slot='footer'>
+      <div style='text-align: end'>
+        <cwc-button variant='support' (click)="closeModalLicence()" style="margin-right: 1rem;">Cancelar</cwc-button>
+          <cwc-button *ngIf="photoBack.webviewPath && photoFrontal.webviewPath" variant='primary' (click)="savePhotoLicence()">Actualizar</cwc-button>
+      </div>
+  </footer>
+</cwc-modal>

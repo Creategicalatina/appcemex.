@@ -1,0 +1,172 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Actualizar documentos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<div slot="main" class="content">
+  <div class="content-title-register">
+    <h6>Seleccione el documento que desea actualizar</h6>
+  </div>
+  <div>
+    <form [formGroup]="formTypeArchive">
+        <cwc-radio-group ngDefaultControl formControlName="typeArchive" required name='Required'
+            label='' style='min-width: 160px'  (cwcChange)="cwcChange($event)">
+            <cwc-radio value='3' style="margin-bottom: 0.5rem;">Cédula de Ciudadanía</cwc-radio><br>
+            <cwc-radio value='4' style="margin-bottom: 0.5rem;" *ngIf="rol === 'AdminLogis'">Documento Empresa</cwc-radio>
+            <cwc-radio value='1' style="margin-bottom: 0.5rem;" *ngIf="rol !== 'AdminLogis'">Licencia de Conducción</cwc-radio><br/>
+            <cwc-radio value='2' style="margin-bottom: 0.5rem;" *ngIf="rol !== 'AdminLogis'">Carné de Seguridad</cwc-radio><br/>
+        </cwc-radio-group>
+    </form>
+
+    <!--=====================================
+        ARCHIVO DE DOCUMENTO DE LA EMPERSA
+      ======================================-->
+      <div *ngIf="showFormDocumentCompany">
+        <h6>Adjunte los archivos seleccionados</h6>
+        <label for="">Documento de la empresa </label>
+          <div>
+            <cwc-grid class="demo-grid content-archive" >
+              <cwc-cell (click)="openModalDocumentCompany()" class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+                <div class="item-archives">
+                  <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+                  <h5 class="text-archive">Tomar fotografía</h5>
+                </div>
+              </cwc-cell>
+              <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+                <div class="item-archives">
+                  <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+                  <h5 class="text-archive">Seleccionar archivo</h5>
+                </div>
+              </cwc-cell>
+            </cwc-grid>
+          </div>
+          <app-photo-document-company
+          [modalPhotoDocumentCompanyShow]="openPhotoDocumentCompany"
+          [getDataUser]="user"
+          (closeModalArchiveDocumentCompany)="closeModalDocumentCompany($event)"
+          (showLoading)="showLoading($event)"
+          (hidenLoading)="hidenLoading($event)"
+          (showAlertSuccess)="showAlertSuccess($event)"
+          >
+        </app-photo-document-company>
+      </div>
+      <!--=====================================
+        ARCHIVO CARNE DE SEGURIDAD
+      ======================================-->
+      <div *ngIf="showFormCardSecurity">
+        <h6>Adjunte los archivos seleccionados</h6>
+        <label for="">Carné de seguridad industrial y vial</label>
+          <div>
+            <cwc-grid class="demo-grid content-archive" >
+              <cwc-cell (click)="openModalPhotoSecurityCard()" class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+                <div class="item-archives">
+                  <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+                  <h5 class="text-archive">Tomar fotografía</h5>
+                </div>
+              </cwc-cell>
+              <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+                <div class="item-archives">
+                  <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+                  <h5 class="text-archive">Seleccionar archivo</h5>
+                </div>
+              </cwc-cell>
+            </cwc-grid>
+          </div>
+          <app-photo-security-card
+          [modalPhotoSecurityCardShow]="openPhotoSecurityCard"
+          [email]="user.user.email"
+          (closeModalArchiveSecurityCard)="closeModalSecurityCard($event)"
+          (showLoading)="showLoading($event)"
+          (hidenLoading)="hidenLoading($event)"
+          (showAlertSuccess)="showAlertSuccess($event)"
+          >
+        </app-photo-security-card>
+      </div>
+        <!--=====================================
+        ARCHIVO DE LICENCIA DE CONDUCIR
+      ======================================-->
+      <div *ngIf="showFormLicence">
+        <h6>Adjunte los archivos seleccionados</h6>
+        <label for="">Licencia de conducir</label>
+          <div>
+            <cwc-grid class="demo-grid content-archive" >
+              <cwc-cell (click)="openModalPhotoLicence()" class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+                <div class="item-archives">
+                  <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+                  <h5 class="text-archive">Tomar fotografía</h5>
+                </div>
+              </cwc-cell>
+              <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+                <div class="item-archives">
+                  <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+                  <h5 class="text-archive">Seleccionar archivo</h5>
+                </div>
+              </cwc-cell>
+            </cwc-grid>
+          </div>
+          <app-photo-licence-document 
+          [modalPhotoLinceShow]="openPhotoDrivingLicence"
+          [email]="user.user.email"
+          (closeModalArchiveLicence)="closeModalLicence($event)"
+          (showLoading)="showLoading($event)"
+          (hidenLoading)="hidenLoading($event)"
+          (showAlertSuccess)="showAlertSuccess($event)"
+          >
+        </app-photo-licence-document>
+      </div>
+      <!--=====================================
+        ARCHIVO DE CÉDULA DE CIUDADANÍA
+      ======================================-->
+      <div *ngIf="showFormIdentityCard">
+        <h6>Adjunte los archivos seleccionados</h6>
+        <label for="">Cédula de ciudadanía</label>
+          <div>
+            <cwc-grid class="demo-grid content-archive" >
+              <cwc-cell (click)="openModalPhotoIdentityCard()" class="border" colspan="6" mobile-colspan="6" style="cursor: pointer;">
+                <div class="item-archives">
+                  <cwc-icon name="camera" size="28px" color="bright-blue"></cwc-icon>
+                  <h5 class="text-archive">Tomar fotografía</h5>
+                </div>
+              </cwc-cell>
+              <cwc-cell colspan="6" mobile-colspan="6" style="cursor: pointer;">
+                <div class="item-archives">
+                  <cwc-icon name="document" size="28px" color="bright-blue"></cwc-icon>
+                  <h5 class="text-archive">Seleccionar archivo</h5>
+                </div>
+              </cwc-cell>
+            </cwc-grid>
+          </div>
+          <app-photo-identity-card
+          [modalPhotoIdentityCardShow]="openPhotoIdentityCard"
+          (closeModalArchiveIdentityCard)="closeModalIdentityCard($event)"
+          (showLoading)="showLoading($event)"
+          (hidenLoading)="hidenLoading($event)"
+          (showAlertSuccess)="showAlertSuccess($event)"
+          >
+          </app-photo-identity-card>
+      </div>
+  </div>
+</div>
+<!--=====================================
+		ALERTA SUBIO CORRECTAMENTE
+======================================-->
+<app-alert-success
+[alertShow] = "alertSucces"
+title = "Existoso" 
+urlButton = "/app/profile"
+textButton = "Volver al perfil"
+message = "El archivo se actualizó correctamente">
+</app-alert-success>
+<!--=====================================
+		LOADING
+======================================-->
+<div class="loading-content" *ngIf="loading">
+  <cwc-loader>
+    <span slot='loading'>Espere un momento...</span>
+  </cwc-loader>
+</div>

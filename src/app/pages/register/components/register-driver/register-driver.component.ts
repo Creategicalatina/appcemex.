@@ -25,11 +25,13 @@ export class RegisterDriverComponent implements OnInit, OnDestroy {
   alertConfirm = false;
 
   addLicence = false;
+  addSecurityCard = false;
   addIdentityCard = false;
   toastMessage = '';
 
   openPhotoDrivingLicence = false;
   openPhotoIdentityCard = false;
+  openPhotoSecurityCard = false;
 
   errors: string[] = [];
 
@@ -74,10 +76,26 @@ export class RegisterDriverComponent implements OnInit, OnDestroy {
     this.getConveyors();
 
     this.form.get('typeConveyorId').setValue(this.typeConveyor);
+
+    this.conveyorService.closeModalArchiveSecurityCard.subscribe(resp =>{
+      this.openPhotoSecurityCard = resp;
+    });
+    this.conveyorService.frontalArchiveSecurityCard.subscribe(resp =>{
+      this.form.get('documentSecurityCard').setValue(resp);
+    });
+    this.conveyorService.removePhotoFrontalSecurityCard.subscribe(resp =>{
+      this.form.get('documentSecurityCard').setValue('');
+    });
+    this.conveyorService.addPhotoSecurityCard.subscribe(resp =>{
+      this.addSecurityCard = true;
+      this.toastMessage = 'Carné de seguridad agregado';
+      const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+    });
+
     this.conveyorService.closeModalArchiveLicenceDriver.subscribe(resp =>{
       this.openPhotoDrivingLicence = resp;
     });
-
     this.conveyorService.frontalArchiveLicenceDriver.subscribe(resp =>{
       this.form.get('documentDrivinglicenseFrontal').setValue(resp);
     });
@@ -139,8 +157,11 @@ export class RegisterDriverComponent implements OnInit, OnDestroy {
       this.propagar.emit(false);
       this.form.reset();
       this.conveyorService.removeModalLicenceDriver.emit();
+      this.conveyorService.removeModalIdentityCardDriver.emit();
+      this.conveyorService.removeModalSecurityCard.emit();
       this.addLicence = false;
       this.addIdentityCard = false;
+      this.addSecurityCard = false;
       this.alertConfirm = false;
       this.alertSucces = true;
       this.errors = [];
@@ -167,12 +188,25 @@ export class RegisterDriverComponent implements OnInit, OnDestroy {
     this.openPhotoIdentityCard = true;
   }
 
+  openModalPhotoSecurityCard(){
+    this.openPhotoSecurityCard = true;
+  }
+
   removeLicence(){
     this.form.get('documentDrivinglicenseFrontal').setValue('');
     this.form.get('documentDrivinglicenseBack').setValue('');
     this.conveyorService.removeModalLicenceDriver.emit();
     this.addLicence = false;
     this.toastMessage = 'Se eliminó la licencia de conducción';
+    const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+  }
+
+  removeSecurityCard(){
+    this.form.get('documentSecurityCard').setValue('');
+    this.conveyorService.removeModalSecurityCard.emit();
+    this.addSecurityCard = false;
+    this.toastMessage = 'Se eliminó el carné de seguridad';
     const element = document.getElementById('toast-message-driver');
       element.classList.remove('hide');
   }
@@ -246,7 +280,7 @@ export class RegisterDriverComponent implements OnInit, OnDestroy {
       documentDrivinglicenseBack: '',
       documentIdentityCardFrontal: '',
       documentIdentityCardBack: '',
-
+      documentSecurityCard: '',
     });
     this.form.patchValue(this.modelo);
     this.form.valueChanges

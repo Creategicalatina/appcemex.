@@ -19,10 +19,10 @@
         </cwc-entity-selector> -->
     
         <cwc-sidenav-menu id="menuNav" slot="menu-items" variant="positive">
-            <!-- <div class="content-avatar-menu">
-                <cwc-avatar size="small" variant="negative" [name]="user.name" class="m-h-xs"></cwc-avatar>
-                 <p class="text-name-menu">{{ user.name }}</p>
-            </div> -->
+            <div class="content-avatar-menu" style="margin-left: 0.5; margin-right: 0.5rem; display: flex; align-items: center;" [routerLink]="['/app/profile']" routerLinkActive="router-link-active" >
+                <cwc-avatar size="small" variant="negative" [name]="user.name" class="m-h-xs" style="width: 15%; padding: 1rem"></cwc-avatar>
+                 <p style="margin-left: 0.5rem;">{{ user.name }}</p>
+            </div>
             
             <!-- <div>
                 <ul *ngFor="let menudDriver of menu">

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { ConveyorListDTO, CreateConveyorDrive, TypeConveyorListDTO } from 'src/app/interfaces/conveyor/conveyor';
 import { environment } from 'src/environments/environment';
+import { CreateConveyorManTruck, CreateConveyorAdminLogistThird } from '../../interfaces/conveyor/conveyor';
 
 const URL = environment.url;
 @Injectable({
@@ -41,21 +42,40 @@ export class ConveyorService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   @Output() addIdentityCardDriver: EventEmitter<any> = new EventEmitter();
 
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() closeModalArchiveSecurityCard: EventEmitter<any> = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() addPhotoSecurityCard: EventEmitter<any> = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() frontalArchiveSecurityCard: EventEmitter<any> = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() removePhotoFrontalSecurityCard: EventEmitter<any> = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() removeModalSecurityCard: EventEmitter<any> = new EventEmitter();
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() closeModalArchiveDocumentCompany: EventEmitter<any> = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() frontalArchiveDocumentCompany: EventEmitter<any> = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() addPhotoDocumentCompany: EventEmitter<any> = new EventEmitter();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() removeModalPhotoDocumentCompany: EventEmitter<any> = new EventEmitter();
+
   constructor(
     private http: HttpClient,
   ) { }
 
-  public registerManTruck(data: any){
-    return this.http.post(`${URL}/api/conveyor/register-mantruck`, data);
+  public registerManTruck(createManTruck: CreateConveyorDrive){
+    const formData = this.formDataDriver(createManTruck);
+    return this.http.post(`${URL}/api/conveyor/register-mantruck`, formData);
   }
-  public registerAdminLogistThird(data: any){
-    return this.http.post(`${URL}/api/conveyor/register-admin-logist-third`, data);
+  public registerAdminLogistThird(createLogistThird: CreateConveyorAdminLogistThird){
+    const formData = this.formDataAdminLogistThird(createLogistThird);
+    return this.http.post(`${URL}/api/conveyor/register-admin-logist-third`, formData);
   }
-  //  public registerDriver(data: any){
-  //    console.log(data);
-  //    return this.http.post(`${URL}/api/driver/register`, data);
-  //  }
-   public registerDriver(createDriver: CreateConveyorDrive){
+
+  public registerDriver(createDriver: CreateConveyorDrive){
 
      const formData =  this.formDataDriver(createDriver);
 
@@ -65,6 +85,35 @@ export class ConveyorService {
     return this.http.get<ConveyorListDTO>(`${URL}/api/conveyor/list-conveyors`);
   }
 
+  public formDataAdminLogistThird(createLogistThird: CreateConveyorAdminLogistThird){
+
+    const photoIdentityCardFrontal: any = createLogistThird.documentIdentityCardFrontal;
+    const photoIdentityCardBack: any = createLogistThird.documentIdentityCardBack;
+    const photoDocumentCompany: any = createLogistThird.documentCompany;
+
+    const formData = new FormData();
+
+      formData.append('firstName', createLogistThird.firstName);
+      formData.append('lastName', createLogistThird.lastName);
+      formData.append('document', createLogistThird.document);
+      formData.append('Email', createLogistThird.email);
+      formData.append('phoneNumber', createLogistThird.phoneNumber);
+      formData.append('role', createLogistThird.role);
+      formData.append('nameCompany', createLogistThird.nameCompany);
+      formData.append('nitCompany', createLogistThird.nitCompany.toString());
+      formData.append('typeConveyorId', createLogistThird.typeConveyorId.toString() );
+      if(photoIdentityCardFrontal && photoIdentityCardBack){
+        formData.append('documentIdentityCardFrontal', photoIdentityCardFrontal.bob, photoIdentityCardFrontal.filepath );
+        formData.append('documentIdentityCardBack', photoIdentityCardBack.bob, photoIdentityCardBack.filepath );
+      }
+      if(photoDocumentCompany){
+        formData.append('documentCompany', photoDocumentCompany.bob, photoDocumentCompany.filepath );
+      }
+
+  return formData;
+
+}
+
   public formDataDriver(createDriver: CreateConveyorDrive){
 
       const photoLicenceFrontal: any = createDriver.documentDrivinglicenseFrontal;
@@ -72,8 +121,8 @@ export class ConveyorService {
 
       const photoIdentityCardFrontal: any = createDriver.documentIdentityCardFrontal;
       const photoIdentityCardBack: any = createDriver.documentIdentityCardBack;
-      console.log(photoLicenceFrontal);
-      console.log(photoIdentityCardFrontal);
+
+      const photoSecurityCard: any = createDriver.documentSecurityCard;
 
       const formData = new FormData();
 
@@ -84,12 +133,21 @@ export class ConveyorService {
         formData.append('phoneNumber', createDriver.phoneNumber);
         formData.append('role', createDriver.role);
         formData.append('codeSap', createDriver.codeSap);
-        formData.append('conveyorId', createDriver.conveyorId.toString());
+        if(createDriver.typeConveyorId === '3'){
+          formData.append('conveyorId', createDriver.conveyorId.toString());
+        }
         formData.append('typeConveyorId', createDriver.typeConveyorId.toString() );
-        formData.append('documentDrivinglicenseFrontal', photoLicenceFrontal.bob, photoLicenceFrontal.filepath );
-        formData.append('documentDrivinglicenseBack', photoLicenceBack.bob, photoLicenceBack.filepath );
-        formData.append('documentIdentityCardFrontal', photoIdentityCardFrontal.bob, photoIdentityCardFrontal.filepath );
-        formData.append('documentIdentityCardBack', photoIdentityCardBack.bob, photoIdentityCardBack.filepath );
+        if(photoLicenceFrontal && photoLicenceBack){
+          formData.append('documentDrivinglicenseFrontal', photoLicenceFrontal.bob, photoLicenceFrontal.filepath );
+          formData.append('documentDrivinglicenseBack', photoLicenceBack.bob, photoLicenceBack.filepath );
+        }
+        if(photoIdentityCardFrontal && photoIdentityCardBack){
+          formData.append('documentIdentityCardFrontal', photoIdentityCardFrontal.bob, photoIdentityCardFrontal.filepath );
+          formData.append('documentIdentityCardBack', photoIdentityCardBack.bob, photoIdentityCardBack.filepath );
+        }
+        if(photoSecurityCard){
+          formData.append('documentSecurityCard', photoSecurityCard.bob, photoSecurityCard.filepath );
+        }
 
     return formData;
 

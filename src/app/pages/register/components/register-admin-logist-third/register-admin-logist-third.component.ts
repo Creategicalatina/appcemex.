@@ -19,6 +19,9 @@ export class RegisterAdminLogistThirdComponent implements OnInit {
 
   alertSucces = true;
   alertConfirm = false;
+  addIdentityCard = false;
+  addDocumentCompany = false;
+  toastMessage = '';
 
   errors: string[] = [];
 
@@ -46,6 +49,9 @@ export class RegisterAdminLogistThirdComponent implements OnInit {
   statusInputNit = 'regular';
   statusInputMessageNit = '';
 
+  openPhotoIdentityCard = false;
+  openPhotoDocumentCompany = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private conveyorService: ConveyorService,
@@ -56,6 +62,43 @@ export class RegisterAdminLogistThirdComponent implements OnInit {
     this.alertSucces = false;
     this.formBuilderInput();
     this.form.get('typeConveyorId').setValue(this.typeConveyor);
+
+    this.conveyorService.closeModalArchiveDocumentCompany.subscribe(resp =>{
+      this.openPhotoDocumentCompany = resp;
+    });
+    this.conveyorService.frontalArchiveDocumentCompany.subscribe(resp =>{
+      this.form.get('documentCompany').setValue(resp);
+    });
+    this.conveyorService.addPhotoDocumentCompany.subscribe(resp =>{
+      this.addDocumentCompany = true;
+      this.toastMessage = 'Documento de la empresa agregado';
+      const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+    });
+
+
+    this.conveyorService.closeModalArchiveIdentityCardDriver.subscribe(resp =>{
+      this.openPhotoIdentityCard = resp;
+    });
+
+    this.conveyorService.frontalArchiveIdentityCardDriver.subscribe(resp =>{
+      this.form.get('documentIdentityCardFrontal').setValue(resp);
+    });
+    this.conveyorService.backArchiveIdentityCardDriver.subscribe(resp =>{
+      this.form.get('documentIdentityCardBack').setValue(resp);
+    });
+    this.conveyorService.removePhotoBackIdentityCardDriver.subscribe(resp =>{
+      this.form.get('documentIdentityCardFrontal').setValue('');
+    });
+    this.conveyorService.removePhotoBackIdentityCardDriver.subscribe(resp =>{
+      this.form.get('documentIdentityCardBack').setValue('');
+    });
+    this.conveyorService.addIdentityCardDriver.subscribe(resp =>{
+      this.addIdentityCard = true;
+      this.toastMessage = 'Cédula de ciudadanía agregada';
+      const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+    });
   }
 
   async register(){
@@ -65,12 +108,37 @@ export class RegisterAdminLogistThirdComponent implements OnInit {
      this.propagar.emit(true);
     await this.conveyorService.registerAdminLogistThird(this.form.value).subscribe(async resp =>{
        this.propagar.emit(false);
-      this.form.reset();
-      this.alertSucces = true;
+       this.form.reset();
+       this.conveyorService.removeModalIdentityCardDriver.emit();
+       this.conveyorService.removeModalPhotoDocumentCompany.emit();
+       this.alertSucces = true;
+       this.addIdentityCard = false;
+       this.addDocumentCompany = false;
+       this.alertConfirm = false;
+       this.alertSucces = true;
+       this.errors = [];
     }, (error) =>{
        this.propagar.emit(false);
       this.errors = this.errorMessages.parsearErroresAPI(error);
     });
+  }
+
+  removeDocumentCompany(){
+    this.form.get('documentCompany').setValue('');
+    this.conveyorService.removeModalPhotoDocumentCompany.emit();
+    this.addDocumentCompany = false;
+    this.toastMessage = 'Se eliminó el documento de la empresa';
+    const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
+  }
+  removeIdentityCard(){
+    this.form.get('documentIdentityCardFrontal').setValue('');
+    this.form.get('documentIdentityCardBack').setValue('');
+    this.conveyorService.removeModalIdentityCardDriver.emit();
+    this.addIdentityCard = false;
+    this.toastMessage = 'Se eliminó la cédula de ciudadanía';
+    const element = document.getElementById('toast-message-driver');
+      element.classList.remove('hide');
   }
 
   openAlertConfirm(){
@@ -82,6 +150,14 @@ export class RegisterAdminLogistThirdComponent implements OnInit {
 
   closeAlertConfirm(){
     this.alertConfirm = false;
+  }
+
+  openModalPhotoIdentityCard(){
+    this.openPhotoIdentityCard = true;
+  }
+
+  openModalPhotoDocumentCompany(){
+    this.openPhotoDocumentCompany = true;
   }
 
   /*=============================================
@@ -108,9 +184,6 @@ export class RegisterAdminLogistThirdComponent implements OnInit {
       role: ['AdminLogis', [
         Validators.required,
       ]],
-      codeSap: ['', [
-        Validators.required,
-      ]],
       phoneNumber: ['', [
         Validators.required,
         Validators.minLength(10),
@@ -123,6 +196,9 @@ export class RegisterAdminLogistThirdComponent implements OnInit {
       nitCompany: ['', [
         Validators.required,
       ]],
+      documentCompany: '',
+      documentIdentityCardFrontal: '',
+      documentIdentityCardBack: '',
 
     });
     this.form.valueChanges
@@ -174,14 +250,6 @@ export class RegisterAdminLogistThirdComponent implements OnInit {
      }else{
       this.statusInputDocument = 'regular';
       this.statusInputMessageDocument = '';
-     }
-
-     if(this.form.get('codeSap').errors && this.form.get('codeSap').dirty){
-      this.statusInputSap = 'error';
-      this.statusInputMessageSap = 'Este campo es requerido';
-     }else{
-      this.statusInputSap = 'regular';
-      this.statusInputMessageSap = '';
      }
 
      if(this.form.get('phoneNumber').errors && this.form.get('phoneNumber').dirty){

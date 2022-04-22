@@ -1,0 +1,83 @@
+<form (submit)="register()" [formGroup]="form" style="margin-top: 3rem;">
+  <cwc-grid class="demo-grid" design-version="v2" columns="12" mobile-columns="12">
+    <cwc-cell colspan="12" mobile-colspan="12">
+      <div class="section">
+        <cwc-input class="input" 
+                   label='Nombre (s)'
+                   [status]='statusInputName'
+                   [statusMessage]='statusInputMessageName'
+                   design-version="v2" 
+                   formControlName="firstName"
+                   ngDefaultControl
+                   required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+                   label='Apellido (s)'
+                   [status]='statusInputLastName'
+                   [statusMessage]='statusInputMessageLastName'
+                   formControlName="lastName"
+                   design-version="v2" 
+                   ngDefaultControl
+                   required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='Correo electrónico'
+        [status]='statusInputEmail'
+        [statusMessage]='statusInputMessageEmail'
+        formControlName="email"
+        ngDefaultControl
+        design-version="v2" 
+        required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='N° documento'
+        [status]='statusInputDocument'
+        [statusMessage]='statusInputMessageDocument'
+        formControlName="document"
+        design-version="v2" 
+        ngDefaultControl
+        required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='Número de celular'
+        type="number"
+        [status]='statusInputPhone'
+        [statusMessage]='statusInputMessagePhone'
+        formControlName="phoneNumber"
+        design-version="v2"
+        ngDefaultControl
+        required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='Nombre empresa'
+        [status]='statusInputCompany'
+        [statusMessage]='statusInputMessageCompany'
+        formControlName="nameCompany"
+        design-version="v2"
+        ngDefaultControl
+        required
+        ></cwc-input>
+      </div>
+      <div class="section">
+        <cwc-input class="input" 
+        label='N° Nit'
+        [status]='statusInputNit'
+        [statusMessage]='statusInputMessageNit'
+        formControlName="nitCompany"
+        design-version="v2" 
+        ngDefaultControl
+        required
+        ></cwc-input>
+      </div>
+    </cwc-cell>
+  </cwc-grid>

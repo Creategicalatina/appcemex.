@@ -13,7 +13,9 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { RegisterAdminLogistThirdComponent } from './components/register-admin-logist-third/register-admin-logist-third.component';
 import { RegisterDriverComponent } from './components/register-driver/register-driver.component';
 import { PhotoDrivingLicenceComponent } from './components/register-driver/photo-driving-licence/photo-driving-licence.component';
-import { PhotoIndentityCardComponent } from './components/register-driver/photo-indentity-card/photo-indentity-card.component';
+import { PhotoIndentityCardComponent } from './components/photo-indentity-card/photo-indentity-card.component';
+import { DocumentCompanyComponent } from './components/document-company/document-company.component';
+import { SecurityCardComponent } from './components/register-driver/security-card/security-card.component';
 
 @NgModule({
   imports: [
@@ -28,6 +30,8 @@ import { PhotoIndentityCardComponent } from './components/register-driver/photo-
     RegisterPage,
     PhotoDrivingLicenceComponent,
     PhotoIndentityCardComponent,
+    SecurityCardComponent,
+    DocumentCompanyComponent,
     RegisterDriverComponent,
     RegisterMantruckComponent,
     ArchivesRegisterComponent,

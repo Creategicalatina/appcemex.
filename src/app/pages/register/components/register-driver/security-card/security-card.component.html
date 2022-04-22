@@ -1,11 +1,11 @@
-<cwc-modal id='modal-photo-licence-driver' [open] ="modalPhotoIdentityCardShow" class="modal-cemex" (cwcClose)="closeModalIdentityCard()">
+<cwc-modal id='modal-photo-licence-driver' [open] ="modalPhotoSecurityCardShow" class="modal-cemex" (cwcClose)="closeModalSecurityCard()">
   <header slot='header'>
-      <h2 style='margin:0;'>Agregar Cédula de Ciudadanía (Opcional)</h2>
+      <h2 style='margin:0;'>Agregar carné de seguridad (Opcional)</h2>
   </header>
   <cwc-grid class="demo-grid" design-version="v2" columns="12" mobile-columns="12" style="margin-top: 2rem;" style="margin-bottom: 2rem">
     <cwc-cell colspan="6" mobile-colspan="12" style="cursor: pointer; margin-top: 1rem;">
-      <label for="">1. Parte frontal de la cédula</label>
-      <div class="contend-upload-camera" (click)="openCameraOne()">
+      <label for="">Tomar foto del carné</label>
+      <div class="contend-upload-camera" (click)="openCameraOne()" style="margin-bottom: 0.5rem;">
 
           <ion-img class="img-photo-register" *ngIf="photoFrontal.webviewPath" [src]="photoFrontal.webviewPath" style="object-fit: cover;
           max-height: 175px !important;"></ion-img>
@@ -14,9 +14,11 @@
           <p *ngIf="!photoFrontal.webviewPath">Abrir cámara del dispositivo</p>
 
       </div>
-      <cwc-button (click)="removePhotoFrontal()" *ngIf="photoFrontal.webviewPath" variant="link" class="m-h-reg remove-photo-archive">Quitar Foto</cwc-button>
+      <div class="center-remove-photo-archive">
+        <cwc-button (click)="removePhotoFrontal()" *ngIf="photoFrontal.webviewPath" variant="link" class="m-h-reg remove-photo-archive">Quitar Foto</cwc-button>
+      </div>
     </cwc-cell>
-    <cwc-cell colspan="6" mobile-colspan="12" style="cursor: pointer; margin-top: 1rem;">
+    <!-- <cwc-cell colspan="6" mobile-colspan="12" style="cursor: pointer; margin-top: 1rem;">
       <label for="">2. Parte trasera de la cédula</label>
       <div class="contend-upload-camera" (click)="openCameraTwo()">
 
@@ -28,12 +30,13 @@
 
     </div>
     <cwc-button (click)="removePhotoBack()" *ngIf="photoBack.webviewPath" variant="link" class="m-h-reg remove-photo-archive">Quitar Foto</cwc-button>
-    </cwc-cell>
+    </cwc-cell> -->
   </cwc-grid>
   <footer slot='footer'>
       <div style='text-align: end'>
-        <cwc-button variant='support' (click)="closeModalIdentityCard()" style="margin-right: 1rem;">Cancelar</cwc-button>
-          <cwc-button *ngIf="photoBack.webviewPath && photoFrontal.webviewPath" variant='primary' (click)="addIdentityCard()">Aceptar</cwc-button>
+        <cwc-button variant='support' (click)="closeModalSecurityCard()" style="margin-right: 1rem;">Cancelar</cwc-button>
+          <cwc-button *ngIf="photoFrontal.webviewPath" variant='primary' (click)="addPhotoDocumentCompany()">Aceptar</cwc-button>
       </div>
   </footer>
 </cwc-modal>
+

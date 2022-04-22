@@ -37,8 +37,7 @@ export interface Driver{
     documentDrivinglicense?: File;
 }
 
-
-export interface CreateConveyorDrive{
+export interface CreateConveyorManTruck{
     firstName: string;
     lastName: string;
     document: string;
@@ -52,4 +51,37 @@ export interface CreateConveyorDrive{
     documentDrivinglicenseBack?: File;
     documentIdentityCardFrontal?: File;
     documentIdentityCardBack?: File;
+    documentSecurityCard?: File;
+}
+
+export interface CreateConveyorAdminLogistThird{
+    firstName: string;
+    lastName: string;
+    document: string;
+    phoneNumber: string;
+    role: string;
+    email: string;
+    nameCompany: string;
+    nitCompany: number;
+    typeConveyorId: number;
+    documentCompany?: File;
+    documentIdentityCardFrontal?: File;
+    documentIdentityCardBack?: File;
+}
+
+export interface CreateConveyorDrive{
+    firstName: string;
+    lastName: string;
+    document: string;
+    phoneNumber: string;
+    role: string;
+    email: string;
+    codeSap: string;
+    conveyorId: number;
+    typeConveyorId: string;
+    documentDrivinglicenseFrontal?: File;
+    documentDrivinglicenseBack?: File;
+    documentIdentityCardFrontal?: File;
+    documentIdentityCardBack?: File;
+    documentSecurityCard?: File;
 }

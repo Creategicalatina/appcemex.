@@ -1,0 +1,129 @@
+<app-layout>
+  <cwc-card class="m-all-xs">
+        <div class="card-content">
+          <div class="content-avatar-menu" style="margin-left: 0.5; margin-right: 0.5rem; display: flex; justify-content: space-between;">
+            <div style="display: flex;">
+              <div>
+                <cwc-avatar size="small" variant="negative" [name]="user.firstName+' '+user.lastName" class="m-h-xs" style="width: 6%; padding: 1.3rem"></cwc-avatar>
+              </div>
+              <div>
+                  <h5 style="margin: 0;">{{ user.firstName }} {{ user.lastName }} </h5>
+                  <p style="margin: 0;">{{ user.document }}</p>
+              </div>
+            </div>
+            <div>
+              <cwc-button variant="link" class="m-h-reg link-cwc" [routerLink]="['/app/edit']" routerLinkActive="router-link-active" >EDITAR</cwc-button>
+            </div>
+          </div>
+          <div *ngIf="user.roles ==='AdminLogis'" >
+            <div style="margin-top: 2rem">
+              <h6>Empresa</h6>
+            </div>
+            <p style="margin: 0;">{{ user.company.companyName }}</p>
+            <div style=" border: 0.1px solid #d1d1d1; background: #d1d1d1; margin-bottom: 1rem; margin-top: 0.5rem;"></div>
+          </div>
+          
+          <div style="margin-top: 2rem;">
+            <h6>Documentación</h6>
+          </div>
+          <div style=" border: 0.1px solid #d1d1d1; background: #d1d1d1; margin-bottom: 1rem;"></div>
+          <div>
+            <cwc-grid class="demo-grid" design-version="v2" columns="12" mobile-columns="12" style="margin-top: 2rem;" style="margin-bottom: 2rem">
+              <!--=====================================
+		            DOCUMENTO CEDULA
+              ======================================-->
+              <cwc-cell colspan="3" mobile-colspan="6" style="cursor: pointer;" (click)="showModalIndentity()">
+                <label for="">
+                  <cwc-icon [name]="user.documentIdentityCardFrontal || user.documentIdentityCardBack ? 'check-rounded-active-fill' : 'error-rounded-fill'" 
+                  [color]="user.documentIdentityCardFrontal || user.documentIdentityCardBack ? 'bright-green' : 'true-black'">
+                </cwc-icon> Cédula de Ciudadanía</label>
+              </cwc-cell>
+              <!--=====================================
+		            DOCUMENTO DE LA EMPRESA
+              ======================================-->
+              <cwc-cell *ngIf="user.roles ==='AdminLogis'" colspan="3" mobile-colspan="6" style="cursor: pointer;" (click)="showModalDocumentCompany()">
+                <label for="">
+                  <cwc-icon [name]="user.company.documentCompany ? 'check-rounded-active-fill' : 'error-rounded-fill'" 
+                  [color]="user.company.documentCompany ? 'bright-green' : 'true-black'">
+                </cwc-icon> Documento Empresa</label>
+              </cwc-cell>
+              <!--=====================================
+		            DOCUMENTO LICENCIA DE CONDUCCIÓN
+              ======================================-->
+              <cwc-cell *ngIf="user.roles !=='AdminLogis'" colspan="3" mobile-colspan="6" style="cursor: pointer;" (click)="showModalDrivingLicence()">
+                <label for="">
+                  <cwc-icon [name]="user.driver.documentDrivinglicenseFrontal || user.driver.documentDrivinglicenseBack ? 'check-rounded-active-fill' : 'error-rounded-fill'" 
+                  [color]="user.driver.documentDrivinglicenseFrontal || user.driver.documentDrivinglicenseFrontal ? 'bright-green' : 'true-black'">
+                </cwc-icon> Licencia de Conducción</label>
+              </cwc-cell>
+              <!--=====================================
+		            DOCUMENTO CARNE DE SEGURIDAD
+              ======================================-->
+              <cwc-cell *ngIf="user.roles !=='AdminLogis'" colspan="3" mobile-colspan="6" style="cursor: pointer" (click)="showModalSecurityCard()">
+                <label for="">
+                  <cwc-icon [name]="user.driver.documentSecurityCard ? 'check-rounded-active-fill' : 'error-rounded-fill'" name="error-rounded-fill" 
+                  [color]="user.driver.documentSecurityCard ? 'bright-green' : 'true-black'">
+                </cwc-icon> Carné de Seguridad</label>
+              </cwc-cell>
+            </cwc-grid>
+            <div>
+              <cwc-button variant="link" class="m-h-reg link-cwc" style="display: flex; justify-content: end;" [routerLink]="['/app/update-archives']" routerLinkActive="router-link-active" >ACTUALIZAR DOCUMENTOS</cwc-button>
+            </div>
+          </div>
+          <!--=====================================
+		            DOCUMENTO CEDULA
+          ======================================-->
+          <app-document-identity-card 
+          (closeModalIdentity)="closeModalIdentity($event)"
+          [urlIdentityCardFrontal]="user.documentIdentityCardFrontal" 
+          [urlIdentityCardBack]="user.documentIdentityCardBack" 
+          [showModalIdentityCard]="showModalIndentityCard"
+          >
+          </app-document-identity-card>
+          <!--=====================================
+		         DOCUMENTO DE LA EMPRESA
+           ======================================-->
+          <app-document-company
+          (closeModalDocumentCompany)="closeModalDocumentCompany($event)"
+          [urlDocumentCompanyFrontal]="user.company.documentCompany" 
+          [showModalArchiveDocumentCompany]="showModalArchiveDocumentCompany"
+          >
+          </app-document-company>
+          <!--=====================================
+		         DOCUMENTO CARNE DE SEGURIDAD
+           ======================================-->
+           <app-document-security-card
+           (closeModalSecurityCard)="closeModalSecurityCard($event)"
+           [urlSecurityCardFrontal]="user.driver.documentSecurityCard " 
+           [showModalArchiveSecurityCard]="showModalSecurityCardApp"
+           >
+           </app-document-security-card>
+        <!--=====================================
+		            DOCUMENTO DE LA LICENCIA
+        ======================================-->
+        <app-document-driving-licence
+        (closeModalLicence)="closeModalLicence($event)"
+        [urlLicenceFrontal]="user.driver.documentDrivinglicenseFrontal" 
+        [urlLicenceBack]="user.driver.documentDrivinglicenseBack" 
+        [showModalDrivingLicence]="showModalLicence"
+        ></app-document-driving-licence>
+        </div>
+    </cwc-card>
+    <cwc-card class="m-all-xs" style="margin-top: 1rem;">
+      <div class="card-content">
+       <h6 style="text-align: center;">Accede a tu cuenta Clever</h6>
+       <p style="text-align: center;">Revisa tus datos y manten tu perfil actualizado para un mejor seguimiento</p>
+       <div>
+        <cwc-button variant="regular-block">CLEVER GLOBAL</cwc-button>
+       </div>
+      </div>
+  </cwc-card>
+</app-layout>
+<!--=====================================
+		LOADING
+======================================-->
+<div class="loading-content" *ngIf="loading">
+  <cwc-loader>
+    <span slot='loading'>Espere un momento...</span>
+  </cwc-loader>
+</div>

@@ -1,0 +1,36 @@
+<cwc-modal id='modal-show-document-identity' [open] ="showModalDrivingLicence" class="modal-cemex" (cwcClose)="closeModalDrivingLicence()">
+  <header slot='header'>
+      <h2 style='margin:0;'>Licencia de Conducción</h2>
+  </header>
+  <cwc-grid class="demo-grid" design-version="v2" columns="12" mobile-columns="12" style="margin-top: 2rem;" style="margin-bottom: 2rem">
+    <cwc-cell colspan="6" mobile-colspan="12" style="cursor: pointer; margin-top: 1rem;">
+       <label for="">1. Parte frontal de la licencia de conducción</label>
+        <div class="contend-upload-camera">
+          <ion-img class="img-photo-register" [src]="urlLicenceFrontal" style="object-fit: cover; max-height: 175px !important;"></ion-img>
+        </div>
+    </cwc-cell>
+    <cwc-cell colspan="6" mobile-colspan="12" style="cursor: pointer; margin-top: 0.5rem;">
+      <label for="">2. Parte trasera de la licencia de conducción</label>
+       <div class="contend-upload-camera">
+         <ion-img class="img-photo-register" [src]="urlLicenceBack" style="object-fit: cover; max-height: 175px !important;"></ion-img>
+       </div>
+   </cwc-cell>
+  </cwc-grid>
+  <!--=====================================
+		CONTENEDOR SI HAY UN ERROR O NO HAY ARCHIVOS
+======================================-->
+<div style="width: 100%;" *ngIf="!urlLicenceFrontal && !urlLicenceBack">
+  <div class="p-all-reg" style="background: #F4F6F9">
+    <cwc-empty-result header="Error al mostra el documento" icon="error-rounded-fill">
+        Parece que no tiene registrado el archivo de la licencia de conducción.
+        Por favor consulte con el administrador o <a [routerLink]="['/help']" routerLinkActive="router-link-active" >ayuda</a> de Cemex.
+    </cwc-empty-result>
+  </div>
+</div>
+  <footer slot='footer'>
+      <div style='text-align: end'>
+        <cwc-button variant='support' (click)="closeModalDrivingLicence()" style="margin-right: 1rem;">Cerrar</cwc-button>
+        <!-- <cwc-button variant='primary'>Editar</cwc-button> -->
+      </div>
+  </footer>
+</cwc-modal>

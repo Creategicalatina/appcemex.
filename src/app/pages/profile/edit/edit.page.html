@@ -1,0 +1,26 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button text=""></ion-back-button>
+      </ion-buttons>
+      <ion-title>Editar datos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <div slot="main" class="content">
+    <div class="content-title-register">
+      <h5>Mis datos</h5>
+    </div>
+    <div>
+        <!--=====================================
+		    DATOS DEL ADMINISTRADOR LOGISTICO TERCERO
+         ======================================-->
+         <div *ngIf="rol === 'AdminLogis'">
+            <app-edit-admin-logis-third
+             [dataUser]="user"
+            >
+            </app-edit-admin-logis-third>
+         </div>
+         
+    </div>
+  </div>

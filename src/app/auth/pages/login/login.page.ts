@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
     }
     this.loading = true;
     await this.loginService.login(this.form.value).subscribe(async resp =>{
-        await this.loginService.saveToken(resp['token'], resp['expiracion'], resp['user'], resp['roles']);
+        await this.loginService.saveToken(resp['token'], resp['expiracion'], resp, resp['roles']);
           this.errors = [];
           this.roles = resp['roles'];
           this.roles.map((role) =>{
